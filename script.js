@@ -11,7 +11,6 @@ const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 
 // Modal window
-
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -35,7 +34,6 @@ document.addEventListener('keydown', function (e) {
 });
 
 // Scrolling by clicking on Learn more
-
 btnScrollTo.addEventListener('click', function () {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
