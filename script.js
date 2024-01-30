@@ -10,6 +10,7 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
+const header = document.querySelector('.header');
 
 // Modal window
 const openModal = function (e) {
@@ -88,9 +89,17 @@ nav.addEventListener('mouseover', e => handleHover(e, 0.5));
 nav.addEventListener('mouseout', e => handleHover(e, 1));
 
 // Sticky navigation
-const initialCoords = section1.getBoundingClientRect();
+const navHeight = nav.getBoundingClientRect().height;
+const stickyNav = function (entries) {
+  const [entry] = entries;
 
-window.addEventListener('scroll', function () {
-  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+  if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
+};
+
+const headerObsrver = new IntersectionObserver(stickyNav, {
+  root: null,
+  rootMargin: `-${navHeight}px`,
+  threshold: 0,
 });
+headerObsrver.observe(header);
