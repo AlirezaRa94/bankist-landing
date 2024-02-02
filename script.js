@@ -30,19 +30,19 @@ btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
 
-document.addEventListener('keydown', function (e) {
+document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
   }
 });
 
 // Scrolling by clicking on Learn more
-btnScrollTo.addEventListener('click', function () {
+btnScrollTo.addEventListener('click', () => {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
 // Page Navigation
-document.querySelector('.nav__links').addEventListener('click', function (e) {
+document.querySelector('.nav__links').addEventListener('click', e => {
   e.preventDefault();
   if (e.target.classList.contains('nav__link')) {
     const id = e.target.getAttribute('href');
@@ -51,7 +51,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 });
 
 // Tabbed component
-tabsContainer.addEventListener('click', function (e) {
+tabsContainer.addEventListener('click', e => {
   e.preventDefault();
   const clickedTab = e.target.closest('.operations__tab');
 
@@ -91,6 +91,7 @@ nav.addEventListener('mouseout', e => handleHover(e, 1));
 
 // Sticky navigation
 const navHeight = nav.getBoundingClientRect().height;
+
 const stickyNav = function (entries) {
   const [entry] = entries;
 
@@ -119,7 +120,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
   root: null,
   threshold: 0.15,
 });
-allSections.forEach(function (section) {
+allSections.forEach(section => {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
