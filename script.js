@@ -12,6 +12,9 @@ const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
 const header = document.querySelector('.header');
+const slides = document.querySelectorAll('.slide');
+const sliderBtnRight = document.querySelector('.slider__btn--right');
+const sliderBtnLeft = document.querySelector('.slider__btn--left');
 
 // Modal window
 const openModal = function (e) {
@@ -122,7 +125,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 });
 allSections.forEach(section => {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
 });
 
 //Lazy loading images
@@ -150,3 +153,28 @@ const imgObserver = new IntersectionObserver(loadImg, {
 });
 
 imgTargets.forEach(img => imgObserver.observe(img));
+
+// Slider
+let curSlide = 0;
+const lastSlide = slides.length - 1;
+
+const updateSlideTransform = function () {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${(i - curSlide) * 100}%)`)
+  );
+};
+
+const nextSlide = function () {
+  curSlide === lastSlide ? (curSlide = 0) : curSlide++;
+  updateSlideTransform(slides, curSlide);
+};
+
+const prevSlide = function () {
+  curSlide === 0 ? (curSlide = lastSlide) : curSlide--;
+  updateSlideTransform();
+};
+
+updateSlideTransform();
+
+sliderBtnRight.addEventListener('click', nextSlide);
+sliderBtnLeft.addEventListener('click', prevSlide);
