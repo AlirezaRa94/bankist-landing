@@ -178,3 +178,8 @@ updateSlideTransform();
 
 sliderBtnRight.addEventListener('click', nextSlide);
 sliderBtnLeft.addEventListener('click', prevSlide);
+
+document.addEventListener('keydown', e => {
+  e.key === 'ArrowLeft' && prevSlide();
+  e.key === 'ArrowRight' && nextSlide();
+});
