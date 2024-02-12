@@ -156,9 +156,6 @@ const imgObserver = new IntersectionObserver(loadImg, {
 imgTargets.forEach(img => imgObserver.observe(img));
 
 // Slider
-let curSlide = 0;
-const lastSlide = slides.length - 1;
-
 const createDots = function () {
   slides.forEach((_, i) => {
     dotContainer.insertAdjacentHTML(
@@ -178,25 +175,31 @@ const activateDot = function (slide) {
     .classList.add('dots__dot--active');
 };
 
-const updateSlideTransform = function () {
+const goToSlide = function (slide) {
   slides.forEach(
-    (s, i) => (s.style.transform = `translateX(${(i - curSlide) * 100}%)`)
+    (s, i) => (s.style.transform = `translateX(${(i - slide) * 100}%)`)
   );
-  activateDot(curSlide);
+  activateDot(slide);
 };
 
 const nextSlide = function () {
   curSlide === lastSlide ? (curSlide = 0) : curSlide++;
-  updateSlideTransform();
+  goToSlide(curSlide);
 };
 
 const prevSlide = function () {
   curSlide === 0 ? (curSlide = lastSlide) : curSlide--;
-  updateSlideTransform();
+  goToSlide(curSlide);
 };
 
-createDots();
-updateSlideTransform();
+const initSlider = function () {
+  createDots();
+  goToSlide(0);
+};
+
+let curSlide = 0;
+const lastSlide = slides.length - 1;
+initSlider(curSlide);
 
 sliderBtnRight.addEventListener('click', nextSlide);
 sliderBtnLeft.addEventListener('click', prevSlide);
@@ -207,9 +210,10 @@ document.addEventListener('keydown', e => {
 });
 
 dotContainer.addEventListener('click', e => {
-  if (e.target.classList.contains('dots__dot')) {
-    const { slide } = e.target.dataset;
-    curSlide = slide;
-    updateSlideTransform();
+  const element = e.target;
+  if (element.classList.contains('dots__dot')) {
+    const { slide } = element.dataset;
+    curSlide = Number(slide);
+    goToSlide(curSlide);
   }
 });
